@@ -14,7 +14,7 @@ This repository documents my implementation of Lumixen's excellent ESPHome custo
 
 ### Components
 
-- **Connector (JST PH2.0, not recommended without modification – use HY2.0 instead):**  
+- **Connector (JST PH2.0 requires modification):**  
   [AliExpress Link](https://www.aliexpress.com/item/1005007389108799.html)
 
 - **Logic Level Converter:**  
@@ -57,7 +57,7 @@ This repository documents my implementation of Lumixen's excellent ESPHome custo
 
 ### Connector Modification
 
-If using a PH2.0 connector, you will need to carefully file down both sides for it to fit. Use a HY2.0 connector for less modification.
+If using a PH2.0 connector, you will need to carefully file down both sides for it to fit.
 
 ---
 
