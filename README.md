@@ -1,83 +1,86 @@
 # H-Link-Docs
 
-This repo documents my implimentation of lumixens awsome ESPHome custom component: https://github.com/lumixen/esphome-hlink-ac. 
+This repository documents my implementation of Lumixen's excellent ESPHome custom component: [lumixen/esphome-hlink-ac](https://github.com/lumixen/esphome-hlink-ac).
 
-Please note aliexpress links tend to fluctuate in price and are not specific recomendations.
+> **Note:** AliExpress links may fluctuate in price and availability. These are not specific product endorsements.
+
+---
 
 ## Hardware
 
-### Heatpump
+### Heat Pump
 
-Model Number: 
-
-RAS-70YHA2
+- **Model Number:** RAS-70YHA2
 
 ### Components
-Connector used (JST PH2.0):
 
-(does not fit without modification, I do not reccomend using, if purchasing use HY2.0):
+- **Connector (JST PH2.0, not recommended without modification – use HY2.0 instead):**  
+  [AliExpress Link](https://www.aliexpress.com/item/1005007389108799.html)
 
-https://www.aliexpress.com/item/1005007389108799.html
+- **Logic Level Converter:**  
+  [AliExpress Link](https://www.aliexpress.com/item/1005005984772131.html)
 
-Logic level converter:
+- **Buck Converter:**  
+  [AliExpress Link](https://www.aliexpress.com/item/1005007031557776.html)
 
-https://www.aliexpress.com/item/1005005984772131.html
+- **ESP32 (CP2102):**  
+  [AliExpress Link](https://www.aliexpress.com/item/1005006617407766.html)
 
-Buck converter:
+---
 
-https://www.aliexpress.com/item/1005007031557776.html
+## Instructions
 
-ESP32 (CP2102):
+### Step 1: Heat Pump Disassembly
 
-https://www.aliexpress.com/item/1005006617407766.html
+1. **Power Off the Unit**  
+   Turn off the heat pump at the main (master) switch. This is usually located near the outdoor unit. Ensure the green indicator light on the indoor unit is off.
 
-## Instructions:
-### Step 1: Heat Pump Dissasembly:
- - turn of heatpump at master switch
+2. **Remove Three Screws**  
+   These screws are located along the bottom edge of the indoor unit. Plastic covers must be removed to access them.
 
-Switch is typically located near the outdoor unit, ensure the green light is no longer illuminated on the indoor unit.
+   <img src="https://github.com/user-attachments/assets/fc4296af-6c1a-4fb5-a470-f3895c1baf4a" width="400"/>
 
- - Remove three screws
+3. **Release Six Clips**  
+   Use a flathead screwdriver to release the four clips along the top, then two more under the filter cover.
 
-These are located along the bottom side of the indoor unit with  plastic covers that just pull off.
+   <img src="https://github.com/user-attachments/assets/e2d6db87-15da-46ed-9bfa-326974cd86db" width="400"/>  
+   <img src="https://github.com/user-attachments/assets/04a918cd-8d9c-4bc8-bdd5-ced297b5f823" width="400"/>
 
-![image](https://github.com/user-attachments/assets/fc4296af-6c1a-4fb5-a470-f3895c1baf4a)
+4. **Remove Electronics Housing Cover**  
+   Remove any tape if present and unscrew the three screws securing the electronics housing.
 
+5. **Locate the H-Link Header**
 
- - Undo 6 clips
+   <img src="https://github.com/user-attachments/assets/ce5c5abe-a243-49ce-a749-ca0390d74fd2" width="400"/>
 
-Using a flat srewdriver first undo to 4 along the top followed by the two under the filter cover.
+---
 
-![image](https://github.com/user-attachments/assets/e2d6db87-15da-46ed-9bfa-326974cd86db)
+### Connector Modification
 
-![image](https://github.com/user-attachments/assets/04a918cd-8d9c-4bc8-bdd5-ced297b5f823)
+If using a PH2.0 connector, you will need to carefully file down both sides for it to fit. Use a HY2.0 connector for less modification.
 
- - Remove the electronics housing cover
+---
 
-Remove Tape if present and undo three screws
+### Determining Socket Orientation
 
-- Local H-Link header
+Using a multimeter, identify the 12V and Ground pins. In my setup, the 12V pin was at the bottom:
 
-![image](https://github.com/user-attachments/assets/ce5c5abe-a243-49ce-a749-ca0390d74fd2)
+<img src="https://github.com/user-attachments/assets/774b9f2d-0b40-4f59-9ab1-4998cb9af368" width="150"/>
 
-
-### Modifying Connector:
-If you have a PH2.0 you will need to file down both sides.
-
-### Determin socket Orientation:
-Using a multimeter find the wire that gives ~12V and ground (For me it was the following layout with 12V at the bottom).
-
-![image](https://github.com/user-attachments/assets/774b9f2d-0b40-4f59-9ab1-4998cb9af368)
+---
 
 ### Wiring
-Follow the original diagram including using pin 16 and 17 for UART
 
-![image](https://github.com/user-attachments/assets/f5737485-2d1a-44ac-94b3-189e04d45427)
-![image](https://github.com/user-attachments/assets/4ce03b9a-939a-4480-a8fd-891162213673)
+Follow the reference wiring diagram. Use GPIO16 and GPIO17 for UART RX and TX respectively:
 
-### Code
+<img src="https://github.com/user-attachments/assets/f5737485-2d1a-44ac-94b3-189e04d45427" width="400"/>  
+<img src="https://github.com/user-attachments/assets/4ce03b9a-939a-4480-a8fd-891162213673" width="400"/>
 
-```
+---
+
+### ESPHome Configuration
+
+```yaml
 esphome:
   name: hitachi-h-link-controller
   friendly_name: Hitachi AC
@@ -119,19 +122,19 @@ external_components:
 climate:
   - platform: hlink_ac
     name: "LoungeAC"
-    hvac_actions: true # set false if you don't need HVAC actions
+    hvac_actions: true  # Set to false if HVAC actions are not needed
 
 switch:
   - platform: hlink_ac
     remote_lock:
-      name: Remote lock
+      name: Remote Lock
     beeper:
       name: Beeper
 
 sensor:
   - platform: hlink_ac
     outdoor_temperature:
-      name: Outdoor temperature
+      name: Outdoor Temperature
 
 text_sensor:
   - platform: hlink_ac
@@ -141,6 +144,5 @@ text_sensor:
 number:
   - platform: hlink_ac
     auto_target_temperature_offset:
-      name: Auto mode temperature offset
+      name: Auto Mode Temperature Offset
 ```
-
