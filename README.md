@@ -1,7 +1,8 @@
 # H-Link-Docs
-## Software
 
-https://github.com/lumixen/esphome-hlink-ac
+This repo documents my implimentation of lumixens awsome ESPHome custom component: https://github.com/lumixen/esphome-hlink-ac. 
+
+Please note aliexpress links tend to fluctuate in price and are not specific recomendations.
 
 ## Hardware
 
