@@ -15,7 +15,7 @@ This repository documents my implementation of Lumixen's excellent ESPHome custo
 ### Components
 
 - **Connector JST PA2.0 (no modification):**  
-  [AliExpress Link](https://fr.aliexpress.com/item/1005006294406922.html)
+  [AliExpress Link](https://www.aliexpress.com/item/1005006294406922.html)
 
 - **Alternative connector JST PH2.0 (requires modification):**  
   [AliExpress Link](https://www.aliexpress.com/item/1005007389108799.html)
